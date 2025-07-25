@@ -1,67 +1,51 @@
--- Create database
+-- Create the database
 CREATE DATABASE IF NOT EXISTS pathshala;
 USE pathshala;
 
--- Table: student
-CREATE TABLE IF NOT EXISTS student (
-    name         VARCHAR(100),
-    school_name  VARCHAR(100),
-    class        VARCHAR(100),
-    mobile       VARCHAR(20),
-    name_of_tree VARCHAR(100),
-    plant_image  VARCHAR(100),
-    certificate  VARCHAR(100),
-    date_time    DATETIME DEFAULT CURRENT_TIMESTAMP,
-    udise_code   VARCHAR(100),
-    verified     VARCHAR(20) DEFAULT 'false'
+-- Table: school
+CREATE TABLE IF NOT EXISTS school (
+    sno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    udise_code VARCHAR(100),
+    school_name VARCHAR(100),
+    employee_id VARCHAR(100),
+    school_id VARCHAR(100),
+    password VARCHAR(100),
+    address VARCHAR(150)
 );
 
--- Table: teacher
-CREATE TABLE IF NOT EXISTS teacher (
-    name        VARCHAR(100),
+-- Table: student
+CREATE TABLE IF NOT EXISTS student (
+    name VARCHAR(100),
+    employee_id VARCHAR(100),
     school_name VARCHAR(100),
-    username    VARCHAR(100),
-    password    VARCHAR(100),
-    mobile      VARCHAR(100),
-    date_time   DATETIME DEFAULT CURRENT_TIMESTAMP,
-    udise_code  VARCHAR(100)
+    class VARCHAR(100),
+    mobile VARCHAR(20),
+    name_of_tree VARCHAR(100),
+    plant_image VARCHAR(100),
+    certificate VARCHAR(100),
+    date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    udise_code VARCHAR(100),
+    verified VARCHAR(20) DEFAULT 'false'
 );
 
 -- Table: supervisor
 CREATE TABLE IF NOT EXISTS supervisor (
-    name       VARCHAR(100),
-    username   VARCHAR(100),
-    school     VARCHAR(100),
-    password   VARCHAR(100),
+    name VARCHAR(100),
+    username VARCHAR(100),
+    school VARCHAR(100),
+    password VARCHAR(100),
     udise_code VARCHAR(100),
-    mobile     VARCHAR(20)
+    mobile VARCHAR(20)
 );
 
-
-USE pathshala;
-
-USE pathshala;
-
--- Dummy student data (unchanged except file names)
-INSERT INTO student (name, school_name, class, mobile, name_of_tree, plant_image, certificate, udise_code, verified)
-VALUES
-('Ritika Verma', 'Springdale Public School', '8th', '9876543210', 'Neem', 'uploads/a.jpg', 'uploads/b.jpg', '2211223300', 'false'),
-('Pranav Ghosh', 'St. Xavier\'s High School', '10th', '9123456789', 'Peepal', 'uploads/a.jpg', 'uploads/b.jpg', '2211223300', 'false'),
-('Ishaan Reddy', 'Delhi Public School', '7th', '9988776655', 'Mango', 'uploads/a.jpg', 'uploads/b.jpg', '2211223300', 'false'),
-('Mehak Singh', 'Bal Bharti Vidya Mandir', '9th', '9090909090', 'Banyan', 'uploads/a.jpg', 'uploads/b.jpg', '2211223300', 'false'),
-('Tanishq Raj', 'Don Bosco School', '6th', '9988001122', 'Gulmohar', 'uploads/a.jpg', 'uploads/b.jpg', '2211223300', 'false');
-
-
--- Dummy teacher data with easy credentials
-INSERT INTO teacher (name, school_name, username, password, mobile, udise_code)
-VALUES
-('Smita Kulkarni', 'Springdale Public School', 'smita', 'pass', '9898989898', '2211223300'),
-('Ravindra Mehta', 'St. Xavier\'s High School', 'ravi', 'pass', '9871234567', '2211223300'),
-('Nidhi Kapoor', 'Delhi Public School', 'nidhi', 'pass', '9765432109', '2211223300');
-
-
--- Dummy supervisor data with easy credentials
-INSERT INTO supervisor (name, username, school, password, udise_code, mobile)
-VALUES
-('Alok Sharma', 'alok', 'District Admin Office', 'pass', '2211223300', '9001234567'),
-('Kiran Thakur', 'kiran', 'Zonal Education Dept.', 'pass', '2211223300', '9091919191');
+-- Table: teacher
+CREATE TABLE IF NOT EXISTS teacher (
+    name VARCHAR(100),
+    employee_id VARCHAR(100),
+    school_name VARCHAR(100),
+    username VARCHAR(100),
+    password VARCHAR(100),
+    mobile VARCHAR(100),
+    date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    udise_code VARCHAR(100)
+);
