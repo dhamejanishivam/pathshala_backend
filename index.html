@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Basic styling for your form and button */
+        body { font-family: sans-serif; margin: 20px; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h1>Generate Your Resume</h1>
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" value="Shivam Dhamejani">
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" value="dhamejanishivam@gmail.com">
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" value="+91-9644971120">
+    </div>
+    <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" value="Raipur, CG">
+    </div>
+    <div class="form-group">
+        <label for="objective">Summary/Objective:</label>
+        <textarea id="objective">A highly driven Computer Science undergraduate with a strong foundation in full-stack web development, AI research, and data science. Demonstrated ability to independently build projects from scratch, including fine-tuning large language models, designing resume generators, and launching micro-startups. Passionate about developing meaningful, user-focused solutions blending software engineering, machine learning, and business acumen.</textarea>
+    </div>
+
+    <button onclick="generateResumePdf()">Generate PDF</button>
+
+    <script>
+        // Use the global jsPDF object (from jspdf.umd.min.js)
+        const { jsPDF } = window.jspdf;
+
+        function generateResumePdf() {
+            // Dummy data for complex sections, as gathering full form data is beyond this direct request.
+            // In your actual application, these would be dynamically collected from your forms.
+            const workExperienceData = [
+                {
+                    jobTitle: 'Web Development',
+                    companyName: 'Thought Applied Creation',
+                    startDate: 'Oct. 2022',
+                    isPresent: false,
+                    endDate: 'June 2026',
+                    description: 'Built dynamic web applications using HTML, CSS, JavaScript, PHP, and MySQL. Delivered end-to-end features with authentication, interactive Uls, and backend logic. Implemented structured MySQL storage, login systems, and modular backend logic using secure PHP practices. Applied clean UI principles and responsive layout strategies using vanilla JS and CSS.',
+                },
+                {
+                    jobTitle: 'Java Development',
+                    companyName: 'Ray\'s IT',
+                    startDate: 'May 2025',
+                    isPresent: false,
+                    endDate: 'June 2025',
+                    description: 'Built clean, efficient Java programs focusing on syntax, logic, and reusability. Applied OOP (inheritance, encapsulation, polymorphism, abstraction) to build modular Java solutions. Used custom exceptions and file handling (Java I/O) to develop stable applications. Connected Java apps to MySQL using JDBC for real-time CRUD functionality.',
+                }
+            ];
+
+            const educationData = [
+                {
+                    degreeName: 'Bachelor of Technology in Computer Science Engineering',
+                    instituteName: 'Shri Shankaracharya Institute of Technology',
+                    startYear: 'June 2024',
+                    isPresent: false,
+                    endYear: 'July 2024',
+                    location: 'New Raipur, India'
+                },
+                {
+                    degreeName: 'PCM with Computer Science; GPA: 3.3; Percentage 83%',
+                    instituteName: 'Krishna Public School International',
+                    startYear: 'Aug. 2016',
+                    isPresent: false,
+                    endYear: 'July 2022',
+                    location: 'Raipur, CG'
+                }
+            ];
+
+            const projectsData = [
+                {
+                    projectName: 'VISION',
+                    projectUrl: '', // No explicit link in resume
+                    projectDescription: 'LLM Fine-Tuning (In Progress): Current Work: Curated 10.6GB+ of conversational data (Wikipedia data, Reddit, AITA, Chats, Different Datasets) and building preprocessing pipeline for 6.1M text pairs. Goals: Achieve emotional realism in responses and make it a super intelligent chatbot. Skills Applied: Data cleaning, PyTorch, transformer architectures, and optimization techniques.'
+                },
+                {
+                    projectName: 'Resume Generator Web App',
+                    projectUrl: '',
+                    projectDescription: 'Flask + HTML/CSS app where users fill a form to generate PDF resumes instantly. Useful for students and developers to automate resume creation.'
+                },
+                {
+                    projectName: 'Love Charts Personalized Relationship Charts',
+                    projectUrl: 'https://lovecharts.github.io/', // Example URL
+                    projectDescription: 'A creative analytics tool that turns emotional milestones into shareable visual charts. Built a web-app with HTML/CSS and JS, it is also hosted. Users submit their chat\'s data, which are turned into aesthetic charts to reflect patterns and emotions over time. Designed as a romantic novelty with viral potential on Instagram. Focused on design, emotion-driven data, and monetization via chart requests.'
+                }
+            ];
+
+            const skillsData = {
+                languages: ['Python', 'JavaScript', 'HTML', 'CSS', 'SQL', 'Java', 'Bash'],
+                tools: ['PyTorch', 'Scikit-learn', 'Pandas', 'NumPy', 'JSONL', 'Flask', 'Git', 'GitHub Pages', 'RunPod', 'Ollama', 'VS Code', 'Canva']
+            };
+
+            const formData = {
+                selectedTemplateId: 1, // You might use this for different layouts
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value,
+                objective: document.getElementById('objective').value,
+                work_experience: workExperienceData.map(exp => ({
+                    title: exp.jobTitle,
+                    company: exp.companyName,
+                    duration: `${exp.startDate} - ${exp.isPresent ? 'Present' : exp.endDate}`,
+                    description: exp.description,
+                })),
+                education: educationData.map(edu => ({
+                    degree: edu.degreeName,
+                    year: `${edu.startYear} - ${edu.isPresent ? 'Present' : edu.endYear}`,
+                    institution: edu.instituteName,
+                    // location: edu.location, // Include if you want to display it
+                })),
+                projects: projectsData.map(proj => ({
+                    projectName: proj.projectName,
+                    projectLink: proj.projectUrl,
+                    projectDesc: proj.projectDescription
+                })),
+                skills: skillsData, // Assumes skillsData is already structured or flattened as needed
+                // Check if 'achievements' element exists before trying to access its value
+                additional_details: document.getElementById('achievements') ? 
+                                    document.getElementById('achievements').value.split(',').map((detail) => detail.trim()).filter(detail => detail !== '') : 
+                                    [],
+            };
+
+            const doc = new jsPDF();
+            let y = 15; // Starting Y position
+
+            // Helper function to add text and manage Y position
+            const addText = (text, x, yPos, options = {}) => {
+                const lines = doc.splitTextToSize(text, doc.internal.pageSize.width - 2 * x); // Auto-wrap text
+                doc.text(lines, x, yPos, options);
+                return yPos + (lines.length * doc.getLineHeight());
+            };
+
+            // --- Header ---
+            doc.setFontSize(24);
+            y = addText(formData.name, 15, y); // Name
+
+            doc.setFontSize(10);
+            y += 2; // Small gap
+            y = addText(`Email: ${formData.email} | Mobile: ${formData.phone}`, 15, y);
+            y = addText(`https://www.shivamdhamejani.in`, 15, y);
+
+            y += 10; // Gap before next section
+
+            // --- Summary ---
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            y = addText('SUMMARY', 15, y);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            y += 2;
+            y = addText(formData.objective, 15, y);
+            y += 10;
+
+            // --- Education ---
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            y = addText('EDUCATION', 15, y);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            y += 2;
+            formData.education.forEach(edu => {
+                if (y > doc.internal.pageSize.height - 30) { doc.addPage(); y = 15; } // New page if too low
+                doc.setFont(undefined, 'bold');
+                y = addText(edu.institution, 15, y);
+                doc.setFont(undefined, 'normal');
+                y = addText(edu.degree, 15, y);
+                y = addText(edu.year, 15, y);
+                // if (edu.location) y = addText(edu.location, 15, y); // Add location if present
+                y += 5;
+            });
+            y += 5; // Gap after section
+
+            // --- Experience ---
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            y = addText('EXPERIENCE', 15, y);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            y += 2;
+            formData.work_experience.forEach(exp => {
+                if (y > doc.internal.pageSize.height - 30) { doc.addPage(); y = 15; }
+                doc.setFont(undefined, 'bold');
+                y = addText(exp.company, 15, y);
+                doc.setFont(undefined, 'normal');
+                y = addText(exp.title, 15, y);
+                y = addText(exp.duration, 15, y);
+                // Add company location if available
+                // y = addText(exp.location, 15, y); // You'd need to add 'location' to your work_experience data
+                
+                // Description as bullet points (if description is a single string, you might want to split it)
+                const descriptionLines = doc.splitTextToSize(exp.description, doc.internal.pageSize.width - 2 * 15 - 5); // Indent for bullet
+                descriptionLines.forEach(line => {
+                    y = addText(`• ${line}`, 20, y);
+                });
+                y += 5;
+            });
+            y += 5;
+
+            // --- Projects ---
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            y = addText('PROJECTS', 15, y);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            y += 2;
+            formData.projects.forEach(proj => {
+                if (y > doc.internal.pageSize.height - 30) { doc.addPage(); y = 15; }
+                doc.setFont(undefined, 'bold');
+                let projectHeader = proj.projectName;
+                if (proj.projectLink) {
+                    projectHeader += ` (${proj.projectLink})`; // Add link if available
+                }
+                y = addText(`• ${projectHeader}`, 15, y);
+                doc.setFont(undefined, 'normal');
+                const projectDescLines = doc.splitTextToSize(proj.projectDesc, doc.internal.pageSize.width - 2 * 15 - 5);
+                projectDescLines.forEach(line => {
+                    y = addText(line, 20, y);
+                });
+                y += 5;
+            });
+            y += 5;
+
+            // --- Programming Skills ---
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            y = addText('PROGRAMMING SKILLS', 15, y);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            y += 2;
+            if (formData.skills.languages && formData.skills.languages.length > 0) {
+                if (y > doc.internal.pageSize.height - 20) { doc.addPage(); y = 15; }
+                y = addText(`• Languages: ${formData.skills.languages.join(', ')}`, 15, y);
+            }
+            if (formData.skills.tools && formData.skills.tools.length > 0) {
+                if (y > doc.internal.pageSize.height - 20) { doc.addPage(); y = 15; }
+                y = addText(`• Technologies & Tools: ${formData.skills.tools.join(', ')}`, 15, y);
+            }
+            y += 5;
+
+            // --- Additional Details (Achievements) ---
+            if (formData.additional_details && formData.additional_details.length > 0) {
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                y = addText('ADDITIONAL DETAILS', 15, y);
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(10);
+                y += 2;
+                formData.additional_details.forEach(detail => {
+                    if (y > doc.internal.pageSize.height - 20) { doc.addPage(); y = 15; }
+                    y = addText(`• ${detail}`, 15, y);
+                });
+                y += 5;
+            }
+
+            doc.save('Shivam_Dhamejani_Resume.pdf');
+        }
+    </script>
+</body>
+</html>
