@@ -12,14 +12,15 @@ UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "upload
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 database_name = 'pathshala'
 
-a = int(input("Enter 1 for production and 0 for local development: "))
-production_global = True if a == 1 else False
+# a = int(input("Enter 1 for production and 0 for local development: "))
+# production_global = True if a == 1 else False
+production_global = True 
 
 app = Flask(__name__, static_folder=UPLOAD_FOLDER, static_url_path='/static')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-if a==1:
+if production_global:
     app.config['SERVER_NAME'] = 'http://165.22.208.62:5003'
     app.config['PREFERRED_URL_SCHEME'] = 'http'
 
