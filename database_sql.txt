@@ -1,51 +1,50 @@
--- Create the database
-CREATE DATABASE IF NOT EXISTS pathshala;
+-- Use the database
 USE pathshala;
 
--- Table: school
-CREATE TABLE IF NOT EXISTS school (
-    sno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    udise_code VARCHAR(100),
-    school_name VARCHAR(100),
-    employee_id VARCHAR(100),
-    school_id VARCHAR(100),
-    password VARCHAR(100),
-    address VARCHAR(150)
-);
-
--- Table: student
-CREATE TABLE IF NOT EXISTS student (
-    name VARCHAR(100),
-    employee_id VARCHAR(100),
-    school_name VARCHAR(100),
-    class VARCHAR(100),
-    mobile VARCHAR(20),
+-- STUDENT table
+CREATE TABLE student (
+    name         VARCHAR(100),
+    employee_id  VARCHAR(100),
+    school_name  VARCHAR(100),
+    class        VARCHAR(100),
+    mobile       VARCHAR(20),
     name_of_tree VARCHAR(100),
-    plant_image VARCHAR(100),
-    certificate VARCHAR(100),
-    date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    udise_code VARCHAR(100),
-    verified VARCHAR(20) DEFAULT 'false'
+    plant_image  VARCHAR(100),
+    certificate  VARCHAR(100),
+    date_time    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    udise_code   VARCHAR(100),
+    verified     VARCHAR(20) DEFAULT 'false'
 );
 
--- Table: supervisor
-CREATE TABLE IF NOT EXISTS supervisor (
-    name VARCHAR(100),
-    username VARCHAR(100),
-    school VARCHAR(100),
-    password VARCHAR(100),
-    udise_code VARCHAR(100),
-    mobile VARCHAR(20)
+-- SCHOOL table
+CREATE TABLE school (
+    sno         INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    udise_code  VARCHAR(100),
+    school_name VARCHAR(100),
+    employee_id VARCHAR(100),
+    school_id   VARCHAR(100),
+    password    VARCHAR(100),
+    address     VARCHAR(150)
 );
 
--- Table: teacher
-CREATE TABLE IF NOT EXISTS teacher (
-    name VARCHAR(100),
+-- SUPERVISOR table
+CREATE TABLE supervisor (
+    name       VARCHAR(100),
+    username   VARCHAR(100),
+    school     VARCHAR(100),
+    password   VARCHAR(100),
+    udise_code VARCHAR(100),
+    mobile     VARCHAR(20)
+);
+
+-- TEACHER table
+CREATE TABLE teacher (
+    name        VARCHAR(100),
     employee_id VARCHAR(100),
     school_name VARCHAR(100),
-    username VARCHAR(100),
-    password VARCHAR(100),
-    mobile VARCHAR(100),
-    date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    udise_code VARCHAR(100)
+    username    VARCHAR(100),
+    password    VARCHAR(100),
+    mobile      VARCHAR(100),
+    date_time   DATETIME DEFAULT CURRENT_TIMESTAMP,
+    udise_code  VARCHAR(100)
 );
